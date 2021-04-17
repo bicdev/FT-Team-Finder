@@ -10,7 +10,12 @@ class UserProfileData {
   String graduation;
   int yearOfEntry = 0;
   List<int> groupsIDs = [];
-  bool isActive = false;
+  bool isActive = false; // this means visible by the community
+  int profileCompleteness = 0; 
+
+  bool isProfileComplete(){
+    return this.profileCompleteness == 4 ? true : false;
+  }
 
   bool validate() {
     bool r;
