@@ -1,11 +1,12 @@
-import 'package:ft_team_finder/LoginData.dart';
-import 'package:ft_team_finder/UserSkillsData.dart';
+import 'package:ft_team_finder/screens/Login/LoginData.dart';
+import 'package:ft_team_finder/screens/Profile/UserSkillsData.dart';
 
 class UserProfileData {
   UserSkillsData skills =
       new UserSkillsData(); //instantiation because constructor
   LoginData loginData;
   String name;
+  bool hasAlias = false;
   String alias;
   String graduation;
   int yearOfEntry = 0;
