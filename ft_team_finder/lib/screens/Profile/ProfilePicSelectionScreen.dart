@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ft_team_finder/models/ImagePicker.dart';
+import 'package:ft_team_finder/baseWidgets/ImagePicker.dart';
 
 class ProfilePicSelectionScreen extends StatelessWidget {
   @override

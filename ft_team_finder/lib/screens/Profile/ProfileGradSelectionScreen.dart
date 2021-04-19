@@ -1,83 +1,68 @@
 import 'package:flutter/material.dart';
 import 'package:ft_team_finder/models/UserProfileData.dart';
 
-class ProfileNameSelectionScreen extends StatefulWidget {
+class ProfileGradSelectionScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return ProfileNameSelectionScreenState();
+    return ProfileGradSelectionScreenState();
   }
 }
 
-class ProfileNameSelectionScreenState
-    extends State<ProfileNameSelectionScreen> {
+class ProfileGradSelectionScreenState
+    extends State<ProfileGradSelectionScreen> {
   final GlobalKey<FormState> formKey = new GlobalKey<FormState>();
   UserProfileData user = new UserProfileData();
-  TextEditingController _controller = new TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
         home: Scaffold(
-      body: SafeArea(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          makeHeaderBar(),
-          Form(
-              key: formKey,
-              child: Column(
-                children: [
-                makeNameInput(),
-                Text("Do you have an alias/nickname?"),
-                Row(children: [
-                  makeCheckbox(),
-                  Container(
-                    height: 20,
-                    width: 200,
-                    child: makeAliasInput(),
-                  )
-                ]),
-              ])),
-          makeBottomNavigationBar()
-        ],
-      )),
-    ));
+            body: SafeArea(
+                child: Column(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        makeHeaderBar(),
+        Text("Select your Grad:"),
+        Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text("BSI"),
+              makeRadioButton(1),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [Text("TADS"), makeRadioButton(2)],
+          ),
+          Container(
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.horizontal(left: Radius.zero),
+                border: Border.all(color: Colors.black, width: 3)),
+            width: 300,
+            height: 300,
+            child: YearPicker(
+                firstDate: DateTime(DateTime.now().year - 10, 1),
+                lastDate: DateTime(DateTime.now().year, 1),
+                initialDate: DateTime.now(),
+                selectedDate: user.yearOfEntry ?? DateTime.now(),
+                onChanged: (DateTime dateTime) {
+                  print("grads start year: ${user.yearOfEntry}");
+                }),
+          ),
+        ]),
+        makeBottomNavigationBar()
+      ],
+    ))));
   }
 
-  Widget makeCheckbox() {
-    return Checkbox(
-        value: user.hasAlias,
-        onChanged: (bool input) {
-          setState(() {
-            user.hasAlias = input;
-          });
+  Widget makeRadioButton(int value) {
+    return Radio(
+      value: value,
+      groupValue: user.gradID,
+      onChanged: (int input) {
+        setState(() {
+          user.gradID = input;
         });
-  }
-
-  Widget makeNameInput() {
-    return TextFormField(
-      controller: _controller,
-      keyboardType: TextInputType.text,
-      validator: (String input) {
-        bool isEmpty = input.length == 0 ? true : false;
-        if (isEmpty) return "Insert name!";
-        return null;
-      },
-      onSaved: (String input) {
-        print("Saved name: $input");
-      },
-      decoration:
-          InputDecoration(hintText: "Tell us your name!", labelText: "Name"),
-    );
-  }
-
-  Widget makeAliasInput() {
-    return TextFormField(
-      readOnly: !user.hasAlias,
-      enabled: user.hasAlias,
-      keyboardType: TextInputType.text,
-      onSaved: (String input) {
-        print("Saved alias: $input");
       },
     );
   }
@@ -93,7 +78,8 @@ class ProfileNameSelectionScreenState
   Widget makeForwardButton() {
     return ElevatedButton(
         onPressed: () async {
-          formKey.currentState.save();
+          print("user grad id: ${user.gradID}");
+          // formKey.currentState.save();
         },
         child: Icon(Icons.arrow_forward));
   }
@@ -115,7 +101,7 @@ class ProfileNameSelectionScreenState
           Column(
             children: [
               Text(
-                "Profile Name Selection",
+                "Profile Grad Selection",
                 style: TextStyle(color: Colors.white),
               ),
               makeProgressBarContainer(3)

@@ -1,20 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:ft_team_finder/baseWidgets/baseLayout.dart';
+import 'package:ft_team_finder/screens/Profile/ProfileSkillSelectionScreen.dart';
 
 void main() {
-  runApp(ProfileGradSelectionScreen());
+  runApp(MyApp());
 }
 
-class ProfileGradSelectionScreen extends StatefulWidget {
+class MyApp extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() {
-    return ProfileGradSelectionScreenState();
-  }
+  _MyAppState createState() => _MyAppState();
 }
 
-class ProfileGradSelectionScreenState
-    extends State<ProfileGradSelectionScreen> {
+class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    throw UnimplementedError();
+    return MaterialApp(home: Scaffold(body: BaseLayout(ProfileSkillSelectionScreen())));
   }
 }

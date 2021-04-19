@@ -1,18 +1,19 @@
-import 'package:ft_team_finder/screens/Login/LoginData.dart';
-import 'package:ft_team_finder/screens/Profile/UserSkillsData.dart';
+
+import 'package:ft_team_finder/models/LoginData.dart';
+import 'package:ft_team_finder/models/UserSkillsData.dart';
 
 class UserProfileData {
   UserSkillsData skills =
       new UserSkillsData(); //instantiation because constructor
   LoginData loginData;
   String name;
-  bool hasAlias = false;
   String alias;
-  String graduation;
-  int yearOfEntry = 0;
-  List<int> groupsIDs = [];
+  bool hasAlias = false;
   bool isActive = false; // this means visible by the community
+  int gradID = 0; // 0 = none, 1 = BSI, 2 = TADS
+  DateTime yearOfEntry;
   int profileCompleteness = 0; 
+  List<int> groupsIDs = [];
 
   bool isProfileComplete(){
     return this.profileCompleteness == 4 ? true : false;
@@ -20,11 +21,7 @@ class UserProfileData {
 
   bool validate() {
     bool r;
-    (loginData.validate() &&
-            name != null &&
-            alias != null &&
-            graduation != null &&
-            yearOfEntry != 0)
+    (loginData.validate() && this.isProfileComplete())
         ? r = true
         : r = false;
     return r;

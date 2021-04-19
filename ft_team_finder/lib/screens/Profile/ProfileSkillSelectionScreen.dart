@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_radar_chart/flutter_radar_chart.dart';
-import 'package:ft_team_finder/screens/Profile/UserProfileData.dart';
+import 'package:ft_team_finder/models/UserProfileData.dart';
 
 class ProfileSkillSelectionScreen extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() => new SkillSelectorState();
+  State<StatefulWidget> createState() => new ProfileSkillSelectionScreenState();
 }
 
-class SkillSelectorState extends State<ProfileSkillSelectionScreen> {
+class ProfileSkillSelectionScreenState extends State<ProfileSkillSelectionScreen> {
   UserProfileData user = new UserProfileData();
   int vBE = 1;
   int vDB = 1;
@@ -18,29 +18,15 @@ class SkillSelectorState extends State<ProfileSkillSelectionScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        body: SafeArea(
-          child: Container(
-            child: ListView(
-              scrollDirection: Axis.vertical,
-              padding: const EdgeInsets.all(8),
-              children: [
-                makeHeaderBar(),
-                makeSkillSelectorContainer(),
-                makeBottomNavigationBar(),
-              ],
-            ),
-          ),
-        ),
-      ),
+    return Container(
+      child: makeSkillSelectorContainer(),
     );
   }
 
   Widget makeSkillSelectorContainer() {
     return Container(
-        height: 600,
-        child: Column(
+        height: 400,
+        child: ListView(
           children: [
             makeSkillBarContainer("BE", makeSliderContainer(vBE, 0), vBE),
             makeSkillBarContainer("DB", makeSliderContainer(vDB, 1), vDB),
@@ -49,8 +35,8 @@ class SkillSelectorState extends State<ProfileSkillSelectionScreen> {
             makeSkillBarContainer("QA", makeSliderContainer(vQA, 4), vQA),
             makeSkillBarContainer("ST", makeSliderContainer(vST, 5), vST),
             SizedBox(
-              height: 300,
-              width: 300,
+              height: 200,
+              width: 200,
               child: RadarChart.light(
                 useSides: true,
                 reverseAxis: false,
@@ -63,86 +49,6 @@ class SkillSelectorState extends State<ProfileSkillSelectionScreen> {
             )
           ],
         ));
-  }
-
-  Widget makeBottomNavigationBar(){
-    return Container( child: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [ makeBackButton(), makeForwardButton()],));
-
-  }
-
-  Widget makeForwardButton(){
-    return ElevatedButton(onPressed: (){}, child: Icon(Icons.arrow_forward));
-  }
-
-  Widget makeBackButton(){
-    return ElevatedButton(onPressed: (){}, child: Icon(Icons.arrow_back));
-  }
-
-  Widget makeHeaderBar() {
-    return Container(
-      color: Colors.black,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          makeLogoPicContainer(),
-          SizedBox(
-            height: 10,
-          ),
-          Column(
-            children: [
-              Text(
-                "Profile Creation",
-                style: TextStyle(color: Colors.white),
-              ),
-              makeProgressBarContainer(3)
-            ],
-          ),
-          makeProfilePicContainer()
-        ],
-      ),
-    );
-  }
-
-  Widget makeProgressBarContainer(double progress) {
-    return Container(
-      child: SizedBox(
-        height: 10,
-        width: 100,
-        child: LinearProgressIndicator(
-          value: progress,
-          backgroundColor: Colors.white,
-          valueColor: AlwaysStoppedAnimation<Color>(Colors.pink),
-        ),
-      ),
-    );
-  }
-
-  Widget makeProfilePicContainer() {
-    return Container(
-      child: ClipOval(
-        child: Image.asset(
-          "assets/profilePic.jpg",
-          height: 100,
-          width: 100,
-          fit: BoxFit.fill,
-        ),
-      ),
-    );
-  }
-
-  Widget makeLogoPicContainer() {
-    return Container(
-      child: ClipOval(
-        child: Image.asset(
-          "assets/peepoCute.png",
-          height: 100,
-          width: 100,
-          fit: BoxFit.fill,
-        ),
-      ),
-    );
   }
 
   Widget makeSliderContainer(int value, int opt) {
