@@ -14,6 +14,7 @@ class ProfileNameSelectionScreenState
   final GlobalKey<FormState> formKey = new GlobalKey<FormState>();
   UserProfileData user = new UserProfileData();
   TextEditingController _controller = new TextEditingController();
+  bool _hasAlias = false;
 
   TextStyle theme = new TextStyle(
       fontWeight: FontWeight.bold, color: Colors.black87, fontSize: 22);
@@ -46,10 +47,10 @@ class ProfileNameSelectionScreenState
 
   Widget makeCheckbox() {
     return Checkbox(
-        value: user.hasAlias,
+        value: _hasAlias,
         onChanged: (bool input) {
           setState(() {
-            user.hasAlias = input;
+            _hasAlias = input;
           });
         });
   }
@@ -76,8 +77,8 @@ class ProfileNameSelectionScreenState
 
   Widget makeAliasInput() {
     return TextFormField(
-      readOnly: !user.hasAlias,
-      enabled: user.hasAlias,
+      readOnly: !_hasAlias,
+      enabled: _hasAlias,
       keyboardType: TextInputType.text,
       onSaved: (String input) {
         print("Saved alias: $input");

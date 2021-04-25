@@ -8,12 +8,18 @@ class UserProfileData {
   LoginData loginData;
   String name;
   String alias;
-  bool hasAlias = false;
   bool isActive = false; // this means visible by the community
   int gradID = 0; // 0 = none, 1 = BSI, 2 = TADS
-  DateTime yearOfEntry;
+  int yearOfEntry;
   int profileCompleteness = 0; 
   List<int> groupsIDs = [];
+
+  bool hasAlias(){
+    if (alias == "")
+      return false;
+    else
+      return true;
+  }
 
   bool isProfileComplete(){
     return this.profileCompleteness == 4 ? true : false;

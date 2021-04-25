@@ -3,10 +3,9 @@ import 'package:flutter/material.dart';
 // ignore: must_be_immutable
 class BaseLayout extends StatelessWidget {
   Widget child;
-  Function forward;
-  final VoidCallback forwardSelected;
+  final VoidCallback forward;
 
-  BaseLayout({@required Widget child, this.forwardSelected, this.forward}) {
+  BaseLayout({@required Widget child, this.forward}) {
     this.child = child;
   }
 
@@ -92,7 +91,7 @@ class BaseLayout extends StatelessWidget {
 
   Widget makeForwardButton() {
     return ElevatedButton(
-        onPressed: () => forwardSelected(),
+        onPressed: () => forward(),
         style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.pink)),
         child: Icon(Icons.arrow_forward));
   }

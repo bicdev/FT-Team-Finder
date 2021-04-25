@@ -28,10 +28,10 @@ class UserSkillsData {
 
   save(List<int> skills) {
     this.backEnd = skills[0];
-    this.frontEnd = skills[1];
-    this.qualityAssurance = skills[2];
-    this.dataBase = skills[3];
-    this.designThinking = skills[4];
+    this.dataBase = skills[1];
+    this.designThinking = skills[2];
+    this.frontEnd = skills[3];
+    this.qualityAssurance = skills[4];
     this.scientificThinking = skills[5];
   }
 }

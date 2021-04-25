@@ -30,7 +30,7 @@ class SigninEmailScreenState extends State<SigninEmailScreen> {
           ),
         ],
       ),
-      forwardSelected: () {
+      forward: () {
         setState(() => forward());
       },
 

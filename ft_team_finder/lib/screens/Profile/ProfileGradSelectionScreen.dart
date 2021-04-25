@@ -47,7 +47,7 @@ class ProfileGradSelectionScreenState
                 onChanged: (DateTime dateTime) {
                   print("grads start year: $dateTime");
                   setState(() {
-                    user.yearOfEntry = dateTime;
+                    user.yearOfEntry = dateTime.year;
                   });
                 }),
           ),
