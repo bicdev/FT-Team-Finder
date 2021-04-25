@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_radar_chart/flutter_radar_chart.dart';
+import 'package:ft_team_finder/baseWidgets/baseLayout.dart';
 import 'package:ft_team_finder/models/UserProfileData.dart';
 
 class ProfileSkillSelectionScreen extends StatefulWidget {
@@ -18,9 +19,8 @@ class ProfileSkillSelectionScreenState extends State<ProfileSkillSelectionScreen
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: makeSkillSelectorContainer(),
-    );
+    return BaseLayout(child: Container(child: makeSkillSelectorContainer(),
+    ));
   }
 
   Widget makeSkillSelectorContainer() {

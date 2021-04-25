@@ -66,7 +66,6 @@ class SigninPasswordScreenState extends State<SigninPasswordScreen>{
       },
       onSaved: (String input) {
         login.password = input;
-        // print("login password: ${login.password}");
       },
       decoration: InputDecoration(labelText: "Insert a strong password!"),
     );
