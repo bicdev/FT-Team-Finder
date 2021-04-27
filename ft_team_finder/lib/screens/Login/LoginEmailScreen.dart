@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:ft_team_finder/screens/Login/SigninEmailScreen.dart';
+import 'package:ft_team_finder/screens/Main/GroupsScreen.dart';
+import '../../constants.dart';
+import '../../dummy.dart';
 
 class LoginEmailScreen extends SigninEmailScreen {
   @override
@@ -21,6 +24,13 @@ class LoginEmailScreenState extends SigninEmailScreenState {
       formKey.currentState.save();
       print("trying to log in as: ${login.email}");
       print("trying to log in as: ${login.password}");
+      Constants.loggedInUser = Dummy.getUser(0); //placeholder
+      Navigator.push(context, MaterialPageRoute(builder: (context) {
+        return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            home: Scaffold(
+                resizeToAvoidBottomInset: false, body: GroupsScreen()));
+      }));
     } else {
       formKey.currentState.reset();
       login = null;

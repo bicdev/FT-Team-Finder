@@ -1,9 +1,8 @@
-import 'package:ft_team_finder/models/LoginData.dart';
-import 'package:ft_team_finder/models/UserProfileData.dart';
+import 'models/UserProfileData.dart';
+import 'models/LoginData.dart';
 
 class Dummy {
-  List<UserProfileData> _user;
-  LoginData l;
+  static List<UserProfileData> users = new List.empty(growable: true);
   
   List<String> emails = ["g22@dac", "e33@dac", "e44@dac", "a99@dac"];
   List<String> passwords = ["g22", "e33", "e44", "a99"];
@@ -11,24 +10,31 @@ class Dummy {
   List<String> aliases = ["Bic", "Carguinha", "KC", ""];
   List<int> gradids = [1,1,1,1];
   List<int> years = [2018, 2018, 2016, 2018];
-  List<List<int>> skills = [[6,6,4,3,3,2],[3,3,3,3,3,3],[1,1,1,1,6,1],[6,6,6,6,6,6]];
+  dynamic skills = [[6,6,4,3,3,2],[3,3,3,3,3,3],[1,1,1,1,6,1],[6,6,6,6,6,6]];
 
-  UserProfileData getUser(int id){
-    return _user[id];
+  static UserProfileData getUser(int id){
+    return users[id];
   }
 
   Dummy(){
     for (int i=0; i < 4; i++){
-      l.email = emails[i];
-      l.password = passwords[i];
-      _user[i].loginData = l;
-      _user[i].name = names[i];
-      _user[i].alias = aliases[i];
-      _user[i].gradID = gradids[i];
-      _user[i].yearOfEntry = years[i];
-      _user[i].skills.save(skills[i]);
-      _user[i].profileCompleteness = 4;
-      _user[i].isActive = true;
+      UserProfileData user = new UserProfileData();
+      LoginData _l = new LoginData();
+      _l.email = emails[i];
+      _l.password = passwords[i];
+      user.loginData = _l;
+      user.name = names[i];
+      user.alias = aliases[i];
+      user.gradID = gradids[i];
+      user.yearOfEntry = years[i];
+      user.skills.save(skills[i]);
+      user.profileCompleteness = 4;
+      user.isActive = true;
+      users.add(user);
     }
+  }
+
+  static List<UserProfileData> getUsers(){
+    return users;
   }
 }

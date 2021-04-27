@@ -1,7 +1,10 @@
 class LoginData {
-  String email;
-  String password;
+  String email = "";
+  String password = "";
   bool isValidated = false;
+
+  set setEmail(input) => this.email = input;
+  set setPassword(input) => this.password = input;
 
   printCredentials() {
     //for debugging purposes only
@@ -9,7 +12,8 @@ class LoginData {
     print("Password: $password");
   }
 
-  bool validate(){ //will check for email
+  bool validate(){
+    //will check for email
     return true;
   }
 }

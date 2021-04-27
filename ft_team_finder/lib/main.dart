@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ft_team_finder/dummy.dart';
-import 'package:ft_team_finder/screens/Main/VisualizingProfileScreen.dart';
+import 'package:ft_team_finder/screens/Login/LoginEmailScreen.dart';
 
 void main() {
   runApp(MyApp());
@@ -16,7 +16,7 @@ class _MyAppState extends State<MyApp> {
   
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: Scaffold(body: VisualizingProfileScreen(d.getUser(0))));
-    // return MaterialApp(home: Scaffold(body: SigninEmailScreen()));
+    Widget homeScreen = LoginEmailScreen();
+      return MaterialApp(debugShowCheckedModeBanner: false, home: Scaffold(resizeToAvoidBottomInset: false, body: homeScreen));
   }
 }

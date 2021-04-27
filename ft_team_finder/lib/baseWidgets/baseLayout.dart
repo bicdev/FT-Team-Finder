@@ -4,8 +4,9 @@ import 'package:flutter/material.dart';
 class BaseLayout extends StatelessWidget {
   Widget child;
   final VoidCallback forward;
+  final VoidCallback home;
 
-  BaseLayout({@required Widget child, this.forward}) {
+  BaseLayout({@required Widget child, this.forward, this.home}) {
     this.child = child;
   }
 
@@ -85,7 +86,7 @@ class BaseLayout extends StatelessWidget {
     return Container(
         child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [makeForwardButton()],
+      children: [makeHomeButton(), makeForwardButton()],
     ));
   }
 
@@ -94,5 +95,12 @@ class BaseLayout extends StatelessWidget {
         onPressed: () => forward(),
         style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.pink)),
         child: Icon(Icons.arrow_forward));
+  }
+
+  Widget makeHomeButton() {
+    return ElevatedButton(
+        onPressed: () => home(),
+        style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.pink)),
+        child: Icon(Icons.home_outlined));
   }
 }
