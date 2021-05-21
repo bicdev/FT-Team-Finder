@@ -17,4 +17,16 @@ class LoginData {
     //will check for email
     return true;
   }
+
+  LoginData.fromMap(map) {
+    this.email = map["email"];
+    this.password = map["password"];
+  }
+
+  toMap() {
+    var map = Map<String, dynamic>();
+    map["email"] = this.email;
+    map["password"] = this.password;
+    return map;
+  }
 }

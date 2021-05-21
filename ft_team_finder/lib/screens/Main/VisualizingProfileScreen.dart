@@ -2,16 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_radar_chart/flutter_radar_chart.dart';
 import 'package:ft_team_finder/baseWidgets/baseLayout.dart';
 import 'package:ft_team_finder/baseWidgets/customDialog.dart';
-import 'package:ft_team_finder/models/Groups.dart';
 import 'package:ft_team_finder/models/UserProfileData.dart';
 import 'package:ft_team_finder/models/UserSkillsData.dart';
-import 'package:ft_team_finder/screens/Main/GroupsScreen.dart';
 
-import '../../dummy.dart';
+import '../../constants.dart';
 
 // ignore: must_be_immutable
 class VisualizingProfileScreen extends StatelessWidget {
   UserProfileData user;
+  UserProfileData loggedUser;
   UserSkillsData skills;
 
   VisualizingProfileScreen(UserProfileData userBeingVisualized) {
@@ -21,6 +20,7 @@ class VisualizingProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    loggedUser = Constants.loggedInUser;
     String grad = (this.user.gradID == 1) ? "BSI" : "TADS";
     return BaseLayout(
       forward: () => forward(context),
@@ -48,10 +48,11 @@ class VisualizingProfileScreen extends StatelessWidget {
 
   Widget makeInviteButton(BuildContext context, UserProfileData user) {
     bool alreadyInTheGroup = false;
-    Groups gs = Dummy.getUser(0).groups[0]; //placeholder
-    List<UserProfileData> us = gs.members;
-    for (UserProfileData u in us) {
-      if (u == user) alreadyInTheGroup = true;
+    List<UserProfileData> membersOfUserGroup = this.loggedUser.group.sublist(1);
+
+    //list contains
+    for (UserProfileData member in membersOfUserGroup) {
+      if (member == user) alreadyInTheGroup = true;
     }
 
     return ElevatedButton(

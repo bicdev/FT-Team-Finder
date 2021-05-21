@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:ft_team_finder/models/Groups.dart';
 import 'package:ft_team_finder/models/LoginData.dart';
 import 'package:ft_team_finder/models/UserSkillsData.dart';
 
@@ -11,10 +10,21 @@ class UserProfileData {
   int gradID = 0; // 0 = none, 1 = BSI, 2 = TADS
   int yearOfEntry = DateTime.now().year;
   Image img;
-  List<Groups> groups = List.empty(growable: true);
   int profileCompleteness =
       0; //placeholder, this tells if the profile is ready to be active
   bool isActive = false; // this means visible by the community
+  List<UserProfileData> group = List.empty(growable: true);
+
+  UserProfileData(
+      {@required this.loginData,
+      this.name,
+      this.alias,
+      this.gradID,
+      this.yearOfEntry,
+      this.img,
+      this.skills}) {
+    this.group.add(this);
+  }
 
   bool hasAlias() {
     if (alias == "")
@@ -24,7 +34,7 @@ class UserProfileData {
   }
 
   bool isProfileComplete() {
-    return this.profileCompleteness == 5 ? true : false;
+    return this.profileCompleteness == 6 ? true : false;
   }
 
   bool validate() {

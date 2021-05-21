@@ -2,10 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_radar_chart/flutter_radar_chart.dart';
 import 'package:ft_team_finder/baseWidgets/baseLayout.dart';
-import 'package:ft_team_finder/models/Groups.dart';
 import 'package:ft_team_finder/models/UserProfileData.dart';
 import 'package:ft_team_finder/models/UserSkillsData.dart';
-import 'package:ft_team_finder/screens/Main/GroupsScreen.dart';
 import '../../dummy.dart';
 
 class BrowsingProfilesScreen extends StatefulWidget {
