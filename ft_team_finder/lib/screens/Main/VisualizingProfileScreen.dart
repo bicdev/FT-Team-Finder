@@ -2,16 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_radar_chart/flutter_radar_chart.dart';
 import 'package:ft_team_finder/baseWidgets/baseLayout.dart';
 import 'package:ft_team_finder/baseWidgets/customDialog.dart';
+import 'package:ft_team_finder/models/Groups.dart';
 import 'package:ft_team_finder/models/UserProfileData.dart';
 import 'package:ft_team_finder/models/UserSkillsData.dart';
+import 'package:ft_team_finder/screens/Main/GroupsScreen.dart';
+
+import '../../dummy.dart';
 
 // ignore: must_be_immutable
 class VisualizingProfileScreen extends StatelessWidget {
   UserProfileData user;
   UserSkillsData skills;
 
-  VisualizingProfileScreen(UserProfileData loggedInUser) {
-    this.user = loggedInUser;
+  VisualizingProfileScreen(UserProfileData userBeingVisualized) {
+    this.user = userBeingVisualized;
     this.skills = user.skills;
   }
 
@@ -19,6 +23,8 @@ class VisualizingProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     String grad = (this.user.gradID == 1) ? "BSI" : "TADS";
     return BaseLayout(
+      forward: () => forward(context),
+      home: () => home(context),
       child: Column(
         children: [
           Row(
@@ -32,26 +38,36 @@ class VisualizingProfileScreen extends StatelessWidget {
           makeSkillsChart(this.skills),
           Divider(),
           Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
-            makeContactButton(context, user), makeInviteButton(context, user),
+            makeContactButton(context, user),
+            //makeInviteButton(context, user),
           ]),
         ],
       ),
     );
   }
 
-  Widget makeInviteButton(BuildContext context, UserProfileData user){
+  Widget makeInviteButton(BuildContext context, UserProfileData user) {
+    bool alreadyInTheGroup = false;
+    Groups gs = Dummy.getUser(0).groups[0]; //placeholder
+    List<UserProfileData> us = gs.members;
+    for (UserProfileData u in us) {
+      if (u == user) alreadyInTheGroup = true;
+    }
+
     return ElevatedButton(
         onPressed: () {
-          showDialog(context: context,
-                  builder: (BuildContext context){
-                  return CustomDialog(
-                    title: "Invite",
-                    descriptions: "Invite ${user.name} to group?",
-                    text: "Invite",
-                    icon: Icons.person_add,
-                  );
-                  }
+          showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return CustomDialog(
+                  title: "Group Invite",
+                  descriptions: alreadyInTheGroup
+                      ? "Add ${user.name} to group?"
+                      : "${user.name} is already a member of this group!",
+                  text: alreadyInTheGroup ? "Add" : "OK",
+                  icon: Icons.person_add,
                 );
+              });
         },
         style: ButtonStyle(
             backgroundColor: MaterialStateProperty.all(Colors.pink)),
@@ -61,16 +77,17 @@ class VisualizingProfileScreen extends StatelessWidget {
   Widget makeContactButton(BuildContext context, UserProfileData user) {
     return ElevatedButton(
         onPressed: () {
-          showDialog(context: context,
-                  builder: (BuildContext context){
-                  return CustomDialog(
-                    title: "Contact",
-                    descriptions: "${user.name}'s public contact info:\n ${user.loginData.email}",
-                    text: "Thanks",
-                    icon: Icons.message_outlined,
-                  );
-                  }
+          showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return CustomDialog(
+                  title: "Contact",
+                  descriptions:
+                      "${user.name}'s public contact info:\n ${user.loginData.email}",
+                  text: "Thanks",
+                  icon: Icons.message_outlined,
                 );
+              });
         },
         style: ButtonStyle(
             backgroundColor: MaterialStateProperty.all(Colors.pink)),
@@ -98,5 +115,29 @@ class VisualizingProfileScreen extends StatelessWidget {
         ticks: [6],
       ),
     );
+  }
+
+  home(BuildContext context) {
+    Navigator.push(context, MaterialPageRoute(builder: (context) {
+      return MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: Scaffold(
+          resizeToAvoidBottomInset: false,
+          body: GroupsScreen(),
+        ),
+      );
+    }));
+  }
+
+  forward(BuildContext context) {
+    Navigator.push(context, MaterialPageRoute(builder: (context) {
+      return MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: Scaffold(
+          resizeToAvoidBottomInset: false,
+          body: GroupsScreen(),
+        ),
+      );
+    }));
   }
 }

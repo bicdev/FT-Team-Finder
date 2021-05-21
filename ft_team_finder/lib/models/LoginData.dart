@@ -12,7 +12,8 @@ class LoginData {
     print("Password: $password");
   }
 
-  bool validate(){
+  bool validate() {
+    //placeholder
     //will check for email
     return true;
   }

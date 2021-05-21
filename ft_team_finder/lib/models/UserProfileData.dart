@@ -1,36 +1,35 @@
-
+import 'package:flutter/material.dart';
 import 'package:ft_team_finder/models/Groups.dart';
 import 'package:ft_team_finder/models/LoginData.dart';
 import 'package:ft_team_finder/models/UserSkillsData.dart';
 
 class UserProfileData {
-  UserSkillsData skills =
-      new UserSkillsData(); //instantiation because constructor
+  UserSkillsData skills = new UserSkillsData();
   LoginData loginData;
   String name;
   String alias;
   int gradID = 0; // 0 = none, 1 = BSI, 2 = TADS
-  int yearOfEntry;
+  int yearOfEntry = DateTime.now().year;
+  Image img;
   List<Groups> groups = List.empty(growable: true);
-  int profileCompleteness = 0; 
+  int profileCompleteness =
+      0; //placeholder, this tells if the profile is ready to be active
   bool isActive = false; // this means visible by the community
 
-  bool hasAlias(){
+  bool hasAlias() {
     if (alias == "")
       return false;
     else
       return true;
   }
 
-  bool isProfileComplete(){
-    return this.profileCompleteness == 4 ? true : false;
+  bool isProfileComplete() {
+    return this.profileCompleteness == 5 ? true : false;
   }
 
   bool validate() {
     bool r;
-    (loginData.validate() && this.isProfileComplete())
-        ? r = true
-        : r = false;
+    (loginData.validate() && this.isProfileComplete()) ? r = true : r = false;
     return r;
   }
 }

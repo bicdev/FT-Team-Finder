@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_radar_chart/flutter_radar_chart.dart';
 import 'package:ft_team_finder/baseWidgets/baseLayout.dart';
+import 'package:ft_team_finder/models/Groups.dart';
 import 'package:ft_team_finder/models/UserProfileData.dart';
 import 'package:ft_team_finder/models/UserSkillsData.dart';
 import 'package:ft_team_finder/screens/Main/GroupsScreen.dart';
 import '../../dummy.dart';
-import '../../constants.dart';
 
 class BrowsingProfilesScreen extends StatefulWidget {
   @override
@@ -35,7 +35,7 @@ class _BrowsingProfilesScreenState extends State<BrowsingProfilesScreen> {
       child: LayoutBuilder(builder: (context, constraints) {
         return Container(
           width: constraints.maxWidth,
-          height: height * 0.62, //yeah magic number i know
+          height: height * 0.62, //placeholder: yeah magic number i know
           child: ListView.builder(
             padding: EdgeInsets.zero,
             itemCount: users.length,
@@ -50,7 +50,7 @@ class _BrowsingProfilesScreenState extends State<BrowsingProfilesScreen> {
                       width: width * 0.5,
                       height: height * 0.3,
                       child: makeSkillsChart(
-                        users[0],
+                        users[index],
                       )),
                 ],
               );
@@ -64,21 +64,11 @@ class _BrowsingProfilesScreenState extends State<BrowsingProfilesScreen> {
   Widget makeInviteButton(BuildContext context, UserProfileData user) {
     return ElevatedButton(
         onPressed: () {
-            // Dummy.getUser(0).groups[0].addMember(user);
-            Dummy.getUser(0).groups[0].members.add(user);
-            print("${user.name} was added into ${Dummy.getUser(0).groups[0].name}");
-          // setState(() => {
-          // });
-          // showDialog(
-          //     context: context,
-          //     builder: (BuildContext context) {
-          //       return CustomDialog(
-          //         title: "Invite",
-          //         descriptions: "Invite ${user.name} to group?",
-          //         text: "Invite",
-          //         icon: Icons.person_add,
-          //       );
-          //     });
+          Groups gs = Dummy.getUser(0)
+              .groups[0]; //placeholder select which group to add to
+          gs.members.add(user); //placeholder SQL
+          print(
+              "${user.name} was added into ${Dummy.getUser(0).groups[0].name}");
         },
         style: ButtonStyle(
             backgroundColor: MaterialStateProperty.all(Colors.pink)),
@@ -87,7 +77,6 @@ class _BrowsingProfilesScreenState extends State<BrowsingProfilesScreen> {
 
   Widget makeSkillsChart(UserProfileData user) {
     UserSkillsData skills = user.skills;
-
     return SizedBox(
       child: RadarChart.light(
         useSides: true,

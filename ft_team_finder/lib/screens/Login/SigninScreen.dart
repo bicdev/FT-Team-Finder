@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:ft_team_finder/models/LoginData.dart';
 import 'package:ft_team_finder/baseWidgets/baseLayout.dart';
+import 'package:ft_team_finder/screens/Profile/ProfileNameSelectionScreen.dart';
 
-class SigninEmailScreen extends StatefulWidget {
+class SigninScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return SigninEmailScreenState();
+    return SigninScreenState();
   }
 }
 
-class SigninEmailScreenState extends State<SigninEmailScreen> {
+class SigninScreenState extends State<SigninScreen> {
   final GlobalKey<FormState> formKey = new GlobalKey<FormState>();
   LoginData login = new LoginData();
 
@@ -30,19 +31,21 @@ class SigninEmailScreenState extends State<SigninEmailScreen> {
           ),
         ],
       ),
-      forward: () {
-        setState(() => forward());
-      },
-
-      //optional function argument
+      forward: () => forward(),
     );
   }
 
   forward() {
-    // print("hi");
-    this.formKey.currentState.save();
-    print("Signed in as: ${login.email}");
-    print("Signed in as: ${login.password}");
+    setState(() {
+      this.formKey.currentState.save();
+    });
+    Navigator.push(context, MaterialPageRoute(builder: (context) {
+      return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          home: Scaffold(
+              resizeToAvoidBottomInset: false,
+              body: ProfileNameSelectionScreen()));
+    }));
   }
 
   String passwordValidation(String input) {

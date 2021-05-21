@@ -3,6 +3,7 @@ import 'package:ft_team_finder/baseWidgets/baseLayout.dart';
 import 'package:ft_team_finder/dummy.dart';
 import 'package:ft_team_finder/models/Groups.dart';
 import 'package:ft_team_finder/models/UserProfileData.dart';
+import 'package:ft_team_finder/screens/Main/VisualizingProfileScreen.dart';
 import '../../constants.dart';
 import 'BrowsingProfilesScreen.dart';
 
@@ -14,7 +15,7 @@ class GroupsScreen extends StatefulWidget {
 class _GroupsScreenState extends State<GroupsScreen> {
   final GlobalKey<FormState> formKey = new GlobalKey<FormState>();
   Dummy d = new Dummy();
-  UserProfileData user; //this is placeholder, will be current logged in users
+  UserProfileData user;
   String groupName;
   String groupDescription;
   bool _fadeState = true;
@@ -74,21 +75,39 @@ class _GroupsScreenState extends State<GroupsScreen> {
         child: ListView.builder(
           padding: EdgeInsets.zero,
           itemCount: user.groups.length,
-          itemBuilder: (BuildContext context, int index) {
+          itemBuilder: (BuildContext context, int indexGroups) {
             return ExpansionTile(
-              title: Text(user.groups[index].name),
-              subtitle: Text("${user.groups[index].description}"),
-              trailing: makeDeleteGroupButton(user, index),
+              title: Text(user.groups[indexGroups].name),
+              subtitle: Text("${user.groups[indexGroups].description}"),
+              trailing: makeDeleteGroupButton(user, indexGroups),
               children: [
                 Container(
                   width: Constants.width * 0.5,
                   height: Constants.height * 0.3,
                   child: ListView.builder(
-                      itemBuilder: (BuildContext context, int index) {
+                      itemCount: user.groups[indexGroups].members.length,
+                      itemBuilder: (BuildContext context, int indexMembers) {
                         return ListTile(
-                          title: Text("${user.groups[index].members[index].name}"),
-                    );
-                  }),
+                          onLongPress: () => {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) {
+                                return MaterialApp(
+                                  debugShowCheckedModeBanner: false,
+                                  home: Scaffold(
+                                    resizeToAvoidBottomInset: false,
+                                    body: VisualizingProfileScreen(user
+                                        .groups[indexGroups]
+                                        .members[indexMembers]),
+                                  ),
+                                );
+                              }),
+                            )
+                          },
+                          title: Text(
+                              "${user.groups[indexGroups].members[indexMembers].name}"),
+                        );
+                      }),
                 ),
               ],
             );
@@ -143,12 +162,10 @@ class _GroupsScreenState extends State<GroupsScreen> {
           name: this.groupName,
           members: List.empty(growable: true),
           leader: this.user);
-          Constants.loggedInUser.groups.add(g);
-          // user.groups.add(g);
-          // Dummy.getUser(0).groups.add(g);
+      Constants.loggedInUser.groups.add(g);
       this.formKey.currentState.reset();
     } else
-      print("nothing");
+      print("nothing"); //placeholder where should this screen take you?
   }
 
   home() {
@@ -161,7 +178,7 @@ class _GroupsScreenState extends State<GroupsScreen> {
   }
 
   int getUnusedId() {
-    int query = 0; //placeholding for the size of a sql query of all groups
+    int query = 0; //placeholder for the size of a sql query of all groups
     return query + 1;
   }
 }

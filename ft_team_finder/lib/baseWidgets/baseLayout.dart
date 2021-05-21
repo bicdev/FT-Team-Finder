@@ -21,7 +21,6 @@ class BaseLayout extends StatelessWidget {
           mainAxisSize: MainAxisSize.max,
           children: [
             Container(
-              // padding: EdgeInsets.all(10.0),
               decoration: BoxDecoration(
                 color: Colors.blueGrey,
                 borderRadius: BorderRadius.circular(50),
@@ -60,7 +59,7 @@ class BaseLayout extends StatelessWidget {
     return Container(
       child: ClipOval(
         child: Image.asset(
-          "assets/peepoCute.png",
+          'assets/appLogo.png', //placeholder
           height: 100,
           width: 100,
           fit: BoxFit.fill,
@@ -73,7 +72,7 @@ class BaseLayout extends StatelessWidget {
     return Container(
       child: ClipOval(
         child: Image.asset(
-          "assets/profilePic.jpg",
+          "assets/peepoCute.png",
           height: 100,
           width: 100,
           fit: BoxFit.fill,
@@ -93,14 +92,16 @@ class BaseLayout extends StatelessWidget {
   Widget makeForwardButton() {
     return ElevatedButton(
         onPressed: () => forward(),
-        style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.pink)),
+        style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all(Colors.pink)),
         child: Icon(Icons.arrow_forward));
   }
 
   Widget makeHomeButton() {
     return ElevatedButton(
         onPressed: () => home(),
-        style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.pink)),
+        style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all(Colors.pink)),
         child: Icon(Icons.home_outlined));
   }
 }

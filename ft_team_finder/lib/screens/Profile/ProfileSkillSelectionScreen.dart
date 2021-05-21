@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_radar_chart/flutter_radar_chart.dart';
 import 'package:ft_team_finder/baseWidgets/baseLayout.dart';
+import 'package:ft_team_finder/baseWidgets/customDialog.dart';
 import 'package:ft_team_finder/models/UserProfileData.dart';
+import 'package:ft_team_finder/screens/Login/LoginScreen.dart';
 
 class ProfileSkillSelectionScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => new ProfileSkillSelectionScreenState();
 }
 
-class ProfileSkillSelectionScreenState extends State<ProfileSkillSelectionScreen> {
+class ProfileSkillSelectionScreenState
+    extends State<ProfileSkillSelectionScreen> {
   UserProfileData user = new UserProfileData();
   int vBE = 1;
   int vDB = 1;
@@ -19,8 +22,12 @@ class ProfileSkillSelectionScreenState extends State<ProfileSkillSelectionScreen
 
   @override
   Widget build(BuildContext context) {
-    return BaseLayout(child: Container(child: makeSkillSelectorContainer(),
-    ));
+    return BaseLayout(
+        home: () => home(),
+        forward: () => forward(),
+        child: Container(
+          child: makeSkillSelectorContainer(),
+        ));
   }
 
   Widget makeSkillSelectorContainer() {
@@ -92,5 +99,26 @@ class ProfileSkillSelectionScreenState extends State<ProfileSkillSelectionScreen
         children: [Text(skill), s, Text("$value")],
       ),
     );
+  }
+
+  home() {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return CustomDialog(
+            title: "Finish your Profile!",
+            descriptions: "",
+            text: "OK",
+            icon: Icons.check,
+          );
+        });
+  }
+
+  forward() {
+    Navigator.push(context, MaterialPageRoute(builder: (context) {
+      return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          home: Scaffold(resizeToAvoidBottomInset: false, body: LoginScreen()));
+    }));
   }
 }

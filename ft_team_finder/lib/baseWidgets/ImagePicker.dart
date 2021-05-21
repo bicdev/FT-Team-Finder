@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
 
-class ImagePicker extends StatelessWidget {
-// NOT USING ACTUAL IMPLEMENTATION, HOPE TO SEE IN CLASS
+class ImagePicker extends StatefulWidget {
+// NOT USING ACTUAL IMPLEMENTATION
+  @override
+  _ImagePickerState createState() => _ImagePickerState();
+}
+
+class _ImagePickerState extends State<ImagePicker> {
   final String picPath = "assets/peepoCute.png";
+  Image img;
 
   Widget getImage() {
 // RETURNING PLACEHOLDER PROFILE IMAGE
@@ -22,12 +28,14 @@ class ImagePicker extends StatelessWidget {
         Container(
           color: Colors.black,
           alignment: Alignment.center,
-          child: getImage(),
+          child: img,
         ),
         ClipOval(
           child: ElevatedButton(
               onPressed: () {
-                print("Trying to change image");
+                setState(() {
+                  this.img = getImage();
+                });
               },
               child: Icon(Icons.camera_alt)),
         ),
