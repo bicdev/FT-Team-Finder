@@ -4,7 +4,6 @@ import 'package:flutter_radar_chart/flutter_radar_chart.dart';
 import 'package:ft_team_finder/baseWidgets/baseLayout.dart';
 import 'package:ft_team_finder/models/UserProfileData.dart';
 import 'package:ft_team_finder/models/UserSkillsData.dart';
-import '../../dummy.dart';
 
 class BrowsingProfilesScreen extends StatefulWidget {
   @override
@@ -12,17 +11,11 @@ class BrowsingProfilesScreen extends StatefulWidget {
 }
 
 class _BrowsingProfilesScreenState extends State<BrowsingProfilesScreen> {
-  Dummy d = new Dummy();
   List<UserProfileData> users = List.empty(growable: true);
-
-  List<UserProfileData> queryUsers() {
-    return Dummy
-        .users; //this is placeholder, will be replaced by SQL Query of all active users
-  }
 
   @override
   Widget build(BuildContext context) {
-    users = queryUsers();
+    // users = state.userList;
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
 
@@ -61,13 +54,7 @@ class _BrowsingProfilesScreenState extends State<BrowsingProfilesScreen> {
 
   Widget makeInviteButton(BuildContext context, UserProfileData user) {
     return ElevatedButton(
-        onPressed: () {
-          Groups gs = Dummy.getUser(0)
-              .groups[0]; //placeholder select which group to add to
-          gs.members.add(user); //placeholder SQL
-          print(
-              "${user.name} was added into ${Dummy.getUser(0).groups[0].name}");
-        },
+        onPressed: () {},
         style: ButtonStyle(
             backgroundColor: MaterialStateProperty.all(Colors.pink)),
         child: Icon(Icons.person_add));
@@ -95,12 +82,5 @@ class _BrowsingProfilesScreenState extends State<BrowsingProfilesScreen> {
     );
   }
 
-  forward() {
-    Navigator.push(context, MaterialPageRoute(builder: (context) {
-      return MaterialApp(
-          debugShowCheckedModeBanner: false,
-          home:
-              Scaffold(resizeToAvoidBottomInset: false, body: GroupsScreen()));
-    }));
-  }
+  forward() {}
 }

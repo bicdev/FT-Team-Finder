@@ -12,7 +12,7 @@ class ProfilePicSelectionScreen extends StatefulWidget {
 }
 
 class _ProfilePicSelectionScreenState extends State<ProfilePicSelectionScreen> {
-  UserProfileData user = new UserProfileData();
+  UserProfileData user = new UserProfileData(loginData: null);
   Image imgPicking;
   @override
   Widget build(BuildContext context) {

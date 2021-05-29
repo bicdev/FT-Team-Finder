@@ -14,7 +14,7 @@ class ProfileGradSelectionScreen extends StatefulWidget {
 class ProfileGradSelectionScreenState
     extends State<ProfileGradSelectionScreen> {
   final GlobalKey<FormState> formKey = new GlobalKey<FormState>();
-  UserProfileData user = new UserProfileData();
+  UserProfileData user = new UserProfileData(loginData: null);
   @override
   Widget build(BuildContext context) {
     return BaseLayout(

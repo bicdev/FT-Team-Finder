@@ -35,10 +35,6 @@ class LocalDatabaseServer {
         "CREATE TABLE userSkills (id INTEGER PRIMARY KEY AUTOINCREMENT, be INTEGER, fe INTEGER, qa INTEGER, db INTEGER, dt INTEGER, st INTEGER)");
   }
 
-  _configureDb(Database db) async {
-}
-
-
   /* CRUD */
   Future<int> insertLoginData(LoginData loginData) async {
     Database db = await this.database;

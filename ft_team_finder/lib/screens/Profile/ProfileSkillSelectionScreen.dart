@@ -12,7 +12,7 @@ class ProfileSkillSelectionScreen extends StatefulWidget {
 
 class ProfileSkillSelectionScreenState
     extends State<ProfileSkillSelectionScreen> {
-  UserProfileData user = new UserProfileData();
+  UserProfileData user = new UserProfileData(loginData: null);
   int vBE = 1;
   int vDB = 1;
   int vDT = 1;

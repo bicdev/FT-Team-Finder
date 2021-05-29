@@ -5,8 +5,6 @@ import 'package:ft_team_finder/baseWidgets/customDialog.dart';
 import 'package:ft_team_finder/models/UserProfileData.dart';
 import 'package:ft_team_finder/models/UserSkillsData.dart';
 
-import '../../constants.dart';
-
 // ignore: must_be_immutable
 class VisualizingProfileScreen extends StatelessWidget {
   UserProfileData user;
@@ -20,7 +18,6 @@ class VisualizingProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    loggedUser = Constants.loggedInUser;
     String grad = (this.user.gradID == 1) ? "BSI" : "TADS";
     return BaseLayout(
       forward: () => forward(context),
@@ -39,7 +36,6 @@ class VisualizingProfileScreen extends StatelessWidget {
           Divider(),
           Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
             makeContactButton(context, user),
-            //makeInviteButton(context, user),
           ]),
         ],
       ),
@@ -118,27 +114,7 @@ class VisualizingProfileScreen extends StatelessWidget {
     );
   }
 
-  home(BuildContext context) {
-    Navigator.push(context, MaterialPageRoute(builder: (context) {
-      return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: Scaffold(
-          resizeToAvoidBottomInset: false,
-          body: GroupsScreen(),
-        ),
-      );
-    }));
-  }
+  home(BuildContext context) {}
 
-  forward(BuildContext context) {
-    Navigator.push(context, MaterialPageRoute(builder: (context) {
-      return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: Scaffold(
-          resizeToAvoidBottomInset: false,
-          body: GroupsScreen(),
-        ),
-      );
-    }));
-  }
+  forward(BuildContext context) {}
 }

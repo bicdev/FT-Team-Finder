@@ -36,10 +36,4 @@ class UserProfileData {
   bool isProfileComplete() {
     return this.profileCompleteness == 6 ? true : false;
   }
-
-  bool validate() {
-    bool r;
-    (loginData.validate() && this.isProfileComplete()) ? r = true : r = false;
-    return r;
-  }
 }

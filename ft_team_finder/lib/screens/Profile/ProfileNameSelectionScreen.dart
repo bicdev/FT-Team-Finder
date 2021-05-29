@@ -14,7 +14,7 @@ class ProfileNameSelectionScreen extends StatefulWidget {
 class ProfileNameSelectionScreenState
     extends State<ProfileNameSelectionScreen> {
   final GlobalKey<FormState> formKey = new GlobalKey<FormState>();
-  UserProfileData user = new UserProfileData();
+  UserProfileData user = new UserProfileData(loginData: null);
   TextEditingController _controller = new TextEditingController();
   bool _hasAlias = false;
 
