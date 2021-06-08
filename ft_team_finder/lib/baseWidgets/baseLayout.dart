@@ -1,14 +1,8 @@
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
-class BaseLayout extends StatelessWidget {
+abstract class BaseLayout extends StatelessWidget {
   Widget child;
-  final VoidCallback forward;
-  final VoidCallback home;
-
-  BaseLayout({@required Widget child, this.forward, this.home}) {
-    this.child = child;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +42,6 @@ class BaseLayout extends StatelessWidget {
               height: 10.0,
               thickness: 5.0,
             ),
-            makeBottomNavigationBar(),
           ],
         ),
       ))
@@ -79,29 +72,5 @@ class BaseLayout extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  Widget makeBottomNavigationBar() {
-    return Container(
-        child: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [makeHomeButton(), makeForwardButton()],
-    ));
-  }
-
-  Widget makeForwardButton() {
-    return ElevatedButton(
-        onPressed: () => forward(),
-        style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all(Colors.pink)),
-        child: Icon(Icons.arrow_forward));
-  }
-
-  Widget makeHomeButton() {
-    return ElevatedButton(
-        onPressed: () => home(),
-        style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all(Colors.pink)),
-        child: Icon(Icons.home_outlined));
   }
 }

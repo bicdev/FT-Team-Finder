@@ -1,8 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:ft_team_finder/baseWidgets/customDialog.dart';
-import 'package:ft_team_finder/models/UserProfileData.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ft_team_finder/baseWidgets/baseLayout.dart';
-import 'package:ft_team_finder/screens/Profile/ProfileSkillSelectionScreen.dart';
+import 'package:ft_team_finder/logic/ProfileBloc/ProfileBloc.dart';
+import 'package:ft_team_finder/models/UserProfileData.dart';
+
+import 'ProfileSkillSelectionScreen.dart';
+
+// ignore: must_be_immutable
+class GradScreen extends BaseLayout {
+  GradScreen() {
+    this.child = ProfileGradSelectionScreen();
+  }
+
+  @override
+  set child(Widget _child) {
+    super.child = _child;
+  }
+}
 
 class ProfileGradSelectionScreen extends StatefulWidget {
   @override
@@ -14,13 +28,16 @@ class ProfileGradSelectionScreen extends StatefulWidget {
 class ProfileGradSelectionScreenState
     extends State<ProfileGradSelectionScreen> {
   final GlobalKey<FormState> formKey = new GlobalKey<FormState>();
-  UserProfileData user = new UserProfileData(loginData: null);
+  UserProfileData user;
   @override
   Widget build(BuildContext context) {
-    return BaseLayout(
-        home: () => home(),
-        forward: () => forward(),
-        child: Column(
+    return Scaffold(
+        floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.forward),
+          onPressed: forward(),
+        ),
+        resizeToAvoidBottomInset: false,
+        body: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text("Select your Grad:"),
@@ -71,26 +88,11 @@ class ProfileGradSelectionScreenState
     );
   }
 
-  home() {
-    showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return CustomDialog(
-            title: "Finish your Profile!",
-            descriptions: "",
-            text: "OK",
-            icon: Icons.check,
-          );
-        });
-  }
-
   forward() {
-    Navigator.push(context, MaterialPageRoute(builder: (context) {
-      return MaterialApp(
-          debugShowCheckedModeBanner: false,
-          home: Scaffold(
-              resizeToAvoidBottomInset: false,
-              body: ProfileSkillSelectionScreen()));
+    this.formKey.currentState.save();
+    Navigator.push(context, MaterialPageRoute(builder: (_) {
+      return BlocProvider.value(
+          value: BlocProvider.of<ProfileBloc>(context), child: SkillsScreen());
     }));
   }
 }

@@ -2,27 +2,33 @@ import 'package:flutter/material.dart';
 import 'package:flutter_radar_chart/flutter_radar_chart.dart';
 import 'package:ft_team_finder/baseWidgets/baseLayout.dart';
 import 'package:ft_team_finder/baseWidgets/customDialog.dart';
+import 'package:ft_team_finder/constants.dart';
 import 'package:ft_team_finder/models/UserProfileData.dart';
 import 'package:ft_team_finder/models/UserSkillsData.dart';
 
 // ignore: must_be_immutable
-class VisualizingProfileScreen extends StatelessWidget {
+class VisualizingProfileScreen extends BaseLayout {
   UserProfileData user;
   UserProfileData loggedUser;
   UserSkillsData skills;
 
-  VisualizingProfileScreen(UserProfileData userBeingVisualized) {
+  VisualizingProfileScreen(
+      UserProfileData userBeingVisualized, BuildContext context) {
     this.user = userBeingVisualized;
     this.skills = user.skills;
+    this.child = wid(context);
   }
 
   @override
-  Widget build(BuildContext context) {
+  set child(Widget _child) {
+    super.child = _child;
+  }
+
+  Widget wid(BuildContext context) {
     String grad = (this.user.gradID == 1) ? "BSI" : "TADS";
-    return BaseLayout(
-      forward: () => forward(context),
-      home: () => home(context),
-      child: Column(
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      body: Column(
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -44,27 +50,22 @@ class VisualizingProfileScreen extends StatelessWidget {
 
   Widget makeInviteButton(BuildContext context, UserProfileData user) {
     bool alreadyInTheGroup = false;
-    List<UserProfileData> membersOfUserGroup = this.loggedUser.group.sublist(1);
-
-    //list contains
-    for (UserProfileData member in membersOfUserGroup) {
-      if (member == user) alreadyInTheGroup = true;
-    }
+    if (user.group.contains(this.user)) alreadyInTheGroup = true;
 
     return ElevatedButton(
         onPressed: () {
-          showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return CustomDialog(
-                  title: "Group Invite",
-                  descriptions: alreadyInTheGroup
-                      ? "Add ${user.name} to group?"
-                      : "${user.name} is already a member of this group!",
-                  text: alreadyInTheGroup ? "Add" : "OK",
-                  icon: Icons.person_add,
-                );
-              });
+          if (alreadyInTheGroup)
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text("Hey, this guy is already in your group"),
+              duration: Constants.defaultSnackBarDuration,
+            ));
+          else {
+            user.group.add(this.user);
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text("${this.user.name} added to ${user.name}'s group"),
+              duration: Constants.defaultSnackBarDuration,
+            ));
+          }
         },
         style: ButtonStyle(
             backgroundColor: MaterialStateProperty.all(Colors.pink)),
@@ -113,8 +114,4 @@ class VisualizingProfileScreen extends StatelessWidget {
       ),
     );
   }
-
-  home(BuildContext context) {}
-
-  forward(BuildContext context) {}
 }

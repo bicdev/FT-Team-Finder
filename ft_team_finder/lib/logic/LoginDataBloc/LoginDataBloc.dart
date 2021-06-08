@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-
+import 'package:ft_team_finder/database/myLocalDatabase.dart';
 import 'LoginDataEvent.dart';
 import 'LoginDataState.dart';
 
@@ -9,9 +9,7 @@ class LoginDataBloc extends Bloc<LoginDataEvent, LoginDataState> {
   @override
   Stream<LoginDataState> mapEventToState(LoginDataEvent event) async* {
     if (event is NewLoginEvent) {
-      //db insert
-    } else {
-      yield CurrentLoginDataState();
+      MyLocalDatabase.helper.insertLoginData(event.loginData);
     }
   }
 }

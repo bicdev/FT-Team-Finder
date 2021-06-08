@@ -1,9 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_radar_chart/flutter_radar_chart.dart';
 import 'package:ft_team_finder/baseWidgets/baseLayout.dart';
 import 'package:ft_team_finder/baseWidgets/customDialog.dart';
+import 'package:ft_team_finder/logic/ProfileBloc/ProfileBloc.dart';
 import 'package:ft_team_finder/models/UserProfileData.dart';
-import 'package:ft_team_finder/screens/Login/LoginScreen.dart';
+
+import '../../hub.dart';
+
+// ignore: must_be_immutable
+class SkillsScreen extends BaseLayout {
+  SkillsScreen() {
+    this.child = ProfileSkillSelectionScreen();
+  }
+
+  @override
+  set child(Widget _child) {
+    super.child = _child;
+  }
+}
 
 class ProfileSkillSelectionScreen extends StatefulWidget {
   @override
@@ -22,10 +37,13 @@ class ProfileSkillSelectionScreenState
 
   @override
   Widget build(BuildContext context) {
-    return BaseLayout(
-        home: () => home(),
-        forward: () => forward(),
-        child: Container(
+    return Scaffold(
+        floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.forward),
+          onPressed: forward(),
+        ),
+        resizeToAvoidBottomInset: false,
+        body: Container(
           child: makeSkillSelectorContainer(),
         ));
   }
@@ -115,10 +133,9 @@ class ProfileSkillSelectionScreenState
   }
 
   forward() {
-    Navigator.push(context, MaterialPageRoute(builder: (context) {
-      return MaterialApp(
-          debugShowCheckedModeBanner: false,
-          home: Scaffold(resizeToAvoidBottomInset: false, body: LoginScreen()));
+    Navigator.push(context, MaterialPageRoute(builder: (_) {
+      return BlocProvider.value(
+          value: BlocProvider.of<ProfileBloc>(context), child: Hub());
     }));
   }
 }

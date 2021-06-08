@@ -1,29 +1,40 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ft_team_finder/logic/LoginDataBloc/LoginDataBloc.dart';
+import 'package:ft_team_finder/logic/LoginDataBloc/LoginDataEvent.dart';
 import 'package:ft_team_finder/models/LoginData.dart';
 import 'package:ft_team_finder/baseWidgets/baseLayout.dart';
 import 'package:ft_team_finder/screens/Profile/ProfileNameSelectionScreen.dart';
 
-class SigninScreen extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() {
-    return SigninScreenState();
-  }
-}
-
-class SigninScreenState extends State<SigninScreen> {
+// ignore: must_be_immutable
+class SigninScreen extends BaseLayout {
   final GlobalKey<FormState> formKey = new GlobalKey<FormState>();
   LoginData login = new LoginData();
 
+  SigninScreen(BuildContext context) {
+    this.child = wid(context);
+  }
+
   @override
-  Widget build(BuildContext context) {
-    return BaseLayout(
-      child: Column(
+  set child(Widget _child) {
+    super.child = _child;
+  }
+
+  Widget wid(BuildContext context) {
+    return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.forward),
+        onPressed: forward(context),
+      ),
+      resizeToAvoidBottomInset: false,
+      body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Form(
             key: formKey,
             child: Column(
               children: [
+                Text("Sign in"),
                 makeEmailField(),
                 makePasswordField(),
               ],
@@ -31,20 +42,16 @@ class SigninScreenState extends State<SigninScreen> {
           ),
         ],
       ),
-      forward: () => forward(),
     );
   }
 
-  forward() {
-    setState(() {
-      this.formKey.currentState.save();
-    });
-    Navigator.push(context, MaterialPageRoute(builder: (context) {
-      return MaterialApp(
-          debugShowCheckedModeBanner: false,
-          home: Scaffold(
-              resizeToAvoidBottomInset: false,
-              body: ProfileNameSelectionScreen()));
+  forward(BuildContext context) {
+    this.formKey.currentState.save();
+    BlocProvider.of<LoginDataBloc>(context)
+        .add(NewLoginEvent(loginData: login));
+    Navigator.push(context, MaterialPageRoute(builder: (_) {
+      return BlocProvider.value(
+          value: BlocProvider.of<LoginDataBloc>(context), child: NameScreen());
     }));
   }
 

@@ -1,9 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ft_team_finder/baseWidgets/ImagePicker.dart';
 import 'package:ft_team_finder/baseWidgets/baseLayout.dart';
-import 'package:ft_team_finder/baseWidgets/customDialog.dart';
-import 'package:ft_team_finder/models/UserProfileData.dart';
-import 'package:ft_team_finder/screens/Profile/ProfileGradSelectionScreen.dart';
+import 'package:ft_team_finder/logic/ProfileBloc/ProfileBloc.dart';
+
+import 'ProfileSkillSelectionScreen.dart';
+
+// ignore: must_be_immutable
+class PicScreen extends BaseLayout {
+  PicScreen() {
+    this.child = ProfilePicSelectionScreen();
+  }
+
+  @override
+  set child(Widget _child) {
+    super.child = _child;
+  }
+}
 
 class ProfilePicSelectionScreen extends StatefulWidget {
   @override
@@ -12,14 +25,15 @@ class ProfilePicSelectionScreen extends StatefulWidget {
 }
 
 class _ProfilePicSelectionScreenState extends State<ProfilePicSelectionScreen> {
-  UserProfileData user = new UserProfileData(loginData: null);
-  Image imgPicking;
   @override
   Widget build(BuildContext context) {
-    return BaseLayout(
-      home: () => home(),
-      forward: () => forward(),
-      child: Container(
+    return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.forward),
+        onPressed: forward(),
+      ),
+      resizeToAvoidBottomInset: false,
+      body: Container(
         height: 400,
         child: ListView(
           scrollDirection: Axis.vertical,
@@ -37,29 +51,10 @@ class _ProfilePicSelectionScreenState extends State<ProfilePicSelectionScreen> {
     );
   }
 
-  home() {
-    showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return CustomDialog(
-            title: "Finish your Profile!",
-            descriptions: "",
-            text: "OK",
-            icon: Icons.check,
-          );
-        });
-  }
-
   forward() {
-    // setState(() {
-    //   this.user.img = ImagePicker().getImage(); //placeholder
-    // });
-    Navigator.push(context, MaterialPageRoute(builder: (context) {
-      return MaterialApp(
-          debugShowCheckedModeBanner: false,
-          home: Scaffold(
-              resizeToAvoidBottomInset: false,
-              body: ProfileGradSelectionScreen()));
+    Navigator.push(context, MaterialPageRoute(builder: (_) {
+      return BlocProvider.value(
+          value: BlocProvider.of<ProfileBloc>(context), child: SkillsScreen());
     }));
   }
 }
