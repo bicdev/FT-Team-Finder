@@ -25,26 +25,34 @@ class VisualizingProfileScreen extends BaseLayout {
   }
 
   Widget wid(BuildContext context) {
+    Constants().init(context);
     String grad = (this.user.gradID == 1) ? "BSI" : "TADS";
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              Text("${this.user.name}'s Profile"),
-              Text("$grad - ${this.user.yearOfEntry}"),
-            ],
-          ),
-          Divider(),
-          makeSkillsChart(this.skills),
-          Divider(),
-          Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
-            makeContactButton(context, user),
-          ]),
-        ],
-      ),
+    return Column(
+      children: [
+        ClipOval(child: Image.memory(this.user.img)),
+        Divider(),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            Container(
+                width: Constants.width * 0.4,
+                child: Text(
+                  "${this.user.name}'s Profile",
+                  style: Constants.defaultTextStyle,
+                )),
+            Text(
+              "$grad - ${this.user.yearOfEntry}",
+              style: Constants.defaultTextStyle,
+            ),
+          ],
+        ),
+        Divider(),
+        makeSkillsChart(this.skills),
+        Divider(),
+        Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
+          makeContactButton(context, this.user),
+        ]),
+      ],
     );
   }
 

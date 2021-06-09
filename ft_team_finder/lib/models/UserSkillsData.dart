@@ -15,6 +15,14 @@ class UserSkillsData {
     this.scientificThinking = 1;
   }
 
+  UserSkillsData.fromList(
+      {this.backEnd,
+      this.frontEnd,
+      this.qualityAssurance,
+      this.dataBase,
+      this.designThinking,
+      this.scientificThinking});
+
   List<int> asList() {
     return [
       this.backEnd,

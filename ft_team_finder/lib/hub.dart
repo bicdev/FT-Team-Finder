@@ -8,6 +8,7 @@ import 'package:ft_team_finder/screens/Main/VisualizingProfileScreen.dart';
 
 import 'baseWidgets/baseLayout.dart';
 
+// ignore: must_be_immutable
 class HubLayout extends BaseLayout {
   HubLayout() {
     this.child = Hub();

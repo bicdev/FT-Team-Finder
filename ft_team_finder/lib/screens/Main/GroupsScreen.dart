@@ -7,6 +7,7 @@ import 'package:ft_team_finder/models/UserProfileData.dart';
 
 import '../../constants.dart';
 
+// ignore: must_be_immutable
 class GroupsScreen extends BaseLayout {
   GroupsScreen() {
     this.child = wid();

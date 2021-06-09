@@ -36,6 +36,7 @@ class BrowsingProfilesScreen extends BaseLayout {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: LayoutBuilder(builder: (__, constraints) {
+        Constants().init(__);
         return Container(
           width: constraints.maxWidth,
           height:
