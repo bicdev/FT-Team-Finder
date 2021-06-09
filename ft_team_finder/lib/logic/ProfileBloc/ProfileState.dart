@@ -9,7 +9,6 @@ class CurrentProfile extends ProfileState {
 
 class UpdateProfile extends ProfileState {
   UserProfileData profile;
-  int id;
 
-  UpdateProfile({this.id, this.profile});
+  UpdateProfile({this.profile});
 }

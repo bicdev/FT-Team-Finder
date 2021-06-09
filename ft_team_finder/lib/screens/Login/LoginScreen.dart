@@ -6,11 +6,12 @@ import 'package:ft_team_finder/models/LoginData.dart';
 import 'package:ft_team_finder/baseWidgets/baseLayout.dart';
 import 'package:ft_team_finder/screens/Login/SigninScreen.dart';
 
+import '../../constants.dart';
 import '../../hub.dart';
 
 // ignore: must_be_immutable
 class LoginScreen extends BaseLayout {
-  final GlobalKey<FormState> formKey = new GlobalKey<FormState>();
+  static final GlobalKey<FormState> formKey = new GlobalKey<FormState>();
   LoginData login = new LoginData();
 
   LoginScreen(BuildContext context) {
@@ -25,13 +26,8 @@ class LoginScreen extends BaseLayout {
   Widget wid(BuildContext context) {
     return BlocBuilder<LoginDataListenerBloc, LoginDataListenerState>(
         builder: (contextA, state) {
-      return Scaffold(
-        floatingActionButton: FloatingActionButton(
-          child: Icon(Icons.forward),
-          onPressed: forward(context, state.loginList),
-        ),
-        resizeToAvoidBottomInset: false,
-        body: Column(
+      return Container(
+        child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Form(
@@ -41,13 +37,25 @@ class LoginScreen extends BaseLayout {
                   Text("Log in"),
                   makeEmailField(),
                   makePasswordField(),
-                  ElevatedButton(
-                    child: Text("Register"),
-                    onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (_) {
-                        return SigninScreen(context);
-                      }));
-                    },
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      ElevatedButton(
+                        child: Text("Register"),
+                        onPressed: () {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (_) {
+                            return Scaffold(body: SigninScreen(context));
+                          }));
+                        },
+                      ),
+                      ElevatedButton(
+                        child: Text("Login"),
+                        onPressed: () {
+                          forward(context, state.loginList);
+                        },
+                      ),
+                    ],
                   ),
                 ],
               ),
@@ -59,13 +67,19 @@ class LoginScreen extends BaseLayout {
   }
 
   forward(BuildContext context, List<LoginData> logins) {
-    this.formKey.currentState.save();
+    formKey.currentState.save();
     for (LoginData loginData in logins) {
       if (loginData.email == this.login.email &&
           loginData.password == this.login.password) {
         Navigator.push(context, MaterialPageRoute(builder: (_) {
           return Hub();
         }));
+      } else {
+        formKey.currentState.reset();
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text("Incorrect Credentials!"),
+          duration: Constants.defaultSnackBarDuration,
+        ));
       }
     }
   }

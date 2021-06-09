@@ -54,7 +54,7 @@ class _TesterState extends State<Tester> {
                   skills: s,
                 );
 
-                MyLocalDatabase.helper.updateProfile(u, 1);
+                MyLocalDatabase.helper.updateProfile(u);
                 // MyLocalDatabase.helper.insertProfile(u);
               },
               child: Text("Insert")),

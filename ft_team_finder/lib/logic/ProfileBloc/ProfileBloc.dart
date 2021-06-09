@@ -12,7 +12,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       MyLocalDatabase.helper.insertProfile(event.profile);
       yield CurrentProfile(profile: event.profile);
     } else if (event is UpdateEvent) {
-      MyLocalDatabase.helper.updateProfile(event.profile, event.id);
+      MyLocalDatabase.helper.updateProfile(event.profile);
       yield CurrentProfile(profile: event.profile);
     }
   }

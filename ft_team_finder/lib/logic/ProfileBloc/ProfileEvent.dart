@@ -9,7 +9,6 @@ class NewProfileEvent extends ProfileEvent {
 
 class UpdateEvent extends ProfileEvent {
   UserProfileData profile;
-  int id;
 
-  UpdateEvent({this.id, this.profile});
+  UpdateEvent({this.profile});
 }

@@ -8,10 +8,9 @@ abstract class BaseLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Constants().init(context);
     return Container(
-      width: Constants.height * 0.62,
-      height: Constants.height * 0.62,
+      // width: Constants.height * 0.62,
+      // height: Constants.height * 0.62,
       child: Stack(fit: StackFit.expand, children: [
         Image.asset("assets/Backgrounds/bg.jpg", fit: BoxFit.cover),
         SafeArea(

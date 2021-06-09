@@ -116,8 +116,12 @@ class MyLocalDatabase {
 
   // UPDATE
   //TESTED WORKS
-  updateProfile(UserProfileData profile, int id) async {
+  updateProfile(UserProfileData profile) async {
     Database db = await this.database;
+    int id;
+    var q = await db
+        .rawQuery("select id from profiles where name = ${profile.name}");
+    id = q[0]["id"];
     int r = await db.update("profiles", UserProfileData.toMap(profile),
         where: "id = '$id'");
     // print("updated $r");
