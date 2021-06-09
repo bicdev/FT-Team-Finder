@@ -1,45 +1,33 @@
 class UserSkillsData {
-  int backEnd;
-  int frontEnd;
-  int qualityAssurance;
-  int dataBase;
-  int designThinking;
-  int scientificThinking;
+  int be;
+  int fe;
+  int qa;
+  int db;
+  int dt;
+  int st;
 
   UserSkillsData() {
-    this.backEnd = 1;
-    this.frontEnd = 1;
-    this.qualityAssurance = 1;
-    this.dataBase = 1;
-    this.designThinking = 1;
-    this.scientificThinking = 1;
+    this.be = 1;
+    this.fe = 1;
+    this.qa = 1;
+    this.db = 1;
+    this.dt = 1;
+    this.st = 1;
   }
 
   UserSkillsData.fromList(
-      {this.backEnd,
-      this.frontEnd,
-      this.qualityAssurance,
-      this.dataBase,
-      this.designThinking,
-      this.scientificThinking});
+      {this.be, this.fe, this.qa, this.db, this.dt, this.st});
 
   List<int> asList() {
-    return [
-      this.backEnd,
-      this.frontEnd,
-      this.qualityAssurance,
-      this.dataBase,
-      this.designThinking,
-      this.scientificThinking
-    ];
+    return [this.be, this.fe, this.qa, this.db, this.dt, this.st];
   }
 
   save(List<int> skills) {
-    this.backEnd = skills[0];
-    this.dataBase = skills[1];
-    this.designThinking = skills[2];
-    this.frontEnd = skills[3];
-    this.qualityAssurance = skills[4];
-    this.scientificThinking = skills[5];
+    this.be = skills[0];
+    this.db = skills[1];
+    this.dt = skills[2];
+    this.fe = skills[3];
+    this.qa = skills[4];
+    this.st = skills[5];
   }
 }

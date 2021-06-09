@@ -32,28 +32,28 @@ class UserProfileData {
     this.gradID = map["gradID"];
     this.yearOfEntry = map["yearOfEntry"];
     this.img = map["img"];
-    this.skills.backEnd = map["BE"];
-    this.skills.frontEnd = map["FE"];
-    this.skills.qualityAssurance = map["QA"];
-    this.skills.dataBase = map["DB"];
-    this.skills.designThinking = map["DT"];
-    this.skills.scientificThinking = map["ST"];
+    this.skills.be = map["BE"];
+    this.skills.fe = map["FE"];
+    this.skills.qa = map["QA"];
+    this.skills.db = map["DB"];
+    this.skills.dt = map["DT"];
+    this.skills.st = map["ST"];
   }
 
   static toMap(UserProfileData profile) {
     var map = Map<String, dynamic>();
     // map["loginData"] = profile.loginData;
-    map["name"] = profile.name;
-    map["alias"] = profile.alias;
-    map["gradID"] = profile.gradID;
-    map["yearOfEntry"] = profile.yearOfEntry;
-    map["img"] = profile.img;
-    map["BE"] = profile.skills.backEnd;
-    map["FE"] = profile.skills.frontEnd;
-    map["QA"] = profile.skills.qualityAssurance;
-    map["DB"] = profile.skills.dataBase;
-    map["DT"] = profile.skills.designThinking;
-    map["ST"] = profile.skills.scientificThinking;
+    map["name"] = profile.name ?? "";
+    map["alias"] = profile.alias ?? "";
+    map["gradID"] = profile.gradID ?? "";
+    map["yearOfEntry"] = profile.yearOfEntry ?? "";
+    map["img"] = profile.img ?? "";
+    map["BE"] = profile.skills.be ?? 1;
+    map["FE"] = profile.skills.fe ?? 1;
+    map["QA"] = profile.skills.qa ?? 1;
+    map["DB"] = profile.skills.db ?? 1;
+    map["DT"] = profile.skills.dt ?? 1;
+    map["ST"] = profile.skills.st ?? 1;
     return map;
   }
 }

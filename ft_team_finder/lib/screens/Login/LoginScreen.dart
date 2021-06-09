@@ -45,7 +45,9 @@ class LoginScreen extends BaseLayout {
                         onPressed: () {
                           Navigator.push(context,
                               MaterialPageRoute(builder: (_) {
-                            return Scaffold(body: SigninScreen(context));
+                            return Scaffold(
+                                body: SigninScreen(context),
+                                resizeToAvoidBottomInset: false);
                           }));
                         },
                       ),

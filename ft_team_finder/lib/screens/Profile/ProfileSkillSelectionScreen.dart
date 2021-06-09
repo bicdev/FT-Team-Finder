@@ -4,6 +4,8 @@ import 'package:flutter_radar_chart/flutter_radar_chart.dart';
 import 'package:ft_team_finder/baseWidgets/baseLayout.dart';
 import 'package:ft_team_finder/baseWidgets/customDialog.dart';
 import 'package:ft_team_finder/logic/ProfileBloc/ProfileBloc.dart';
+import 'package:ft_team_finder/logic/ProfileBloc/ProfileEvent.dart';
+import 'package:ft_team_finder/logic/ProfileBloc/ProfileState.dart';
 import 'package:ft_team_finder/models/UserProfileData.dart';
 
 import '../../hub.dart';
@@ -37,15 +39,27 @@ class ProfileSkillSelectionScreenState
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        floatingActionButton: FloatingActionButton(
-          child: Icon(Icons.forward),
-          onPressed: forward(),
+    return BlocBuilder<ProfileBloc, ProfileState>(builder: (_, state) {
+      state is CurrentProfile
+          ? this.user = state.profile
+          : print("this shouldnt happen");
+      return Container(
+        child: Column(
+          children: [
+            makeSkillSelectorContainer(),
+            ElevatedButton(
+                child: Icon(Icons.forward),
+                onPressed: () {
+                  BlocProvider.of<ProfileBloc>(context)
+                      .add(UpdateEvent(profile: this.user));
+                  Navigator.push(context, MaterialPageRoute(builder: (_) {
+                    return Hub();
+                  }));
+                }),
+          ],
         ),
-        resizeToAvoidBottomInset: false,
-        body: Container(
-          child: makeSkillSelectorContainer(),
-        ));
+      );
+    });
   }
 
   Widget makeSkillSelectorContainer() {

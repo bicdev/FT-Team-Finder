@@ -37,12 +37,7 @@ class _TesterState extends State<Tester> {
                 Uint8List a = by.buffer.asUint8List();
                 LoginData l = LoginData(email: "ccc", password: "ccc");
                 UserSkillsData s = UserSkillsData.fromList(
-                    backEnd: 6,
-                    dataBase: 6,
-                    designThinking: 6,
-                    frontEnd: 6,
-                    qualityAssurance: 6,
-                    scientificThinking: 6);
+                    be: 6, db: 6, dt: 6, fe: 6, qa: 6, st: 6);
                 // MyLocalDatabase.helper.insertLoginData(l);
                 UserProfileData u = UserProfileData(
                   loginData: l,

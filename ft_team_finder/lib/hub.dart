@@ -57,7 +57,7 @@ class _HubState extends State<Hub> {
               telaIndex = novoIndex;
             });
           },
-          fixedColor: Colors.blueGrey,
+          selectedItemColor: Colors.pink,
         ),
       );
     });

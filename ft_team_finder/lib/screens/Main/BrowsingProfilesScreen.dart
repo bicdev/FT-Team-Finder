@@ -87,14 +87,7 @@ class BrowsingProfilesScreen extends BaseLayout {
         useSides: true,
         reverseAxis: false,
         data: [
-          [
-            skills.backEnd,
-            skills.dataBase,
-            skills.designThinking,
-            skills.frontEnd,
-            skills.qualityAssurance,
-            skills.scientificThinking
-          ]
+          [skills.be, skills.db, skills.dt, skills.fe, skills.qa, skills.st]
         ],
         features: ["BE", "DB", "DT", "FE", "QA", "ST"],
         ticks: [6],

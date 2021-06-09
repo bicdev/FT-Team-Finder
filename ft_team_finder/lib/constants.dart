@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class Constants {
+  static int myId;
   //Theme Constants
   static double height;
   static double width;

@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:io';
+import 'package:ft_team_finder/constants.dart';
 import 'package:ft_team_finder/models/LoginData.dart';
 import 'package:ft_team_finder/models/UserProfileData.dart';
 import 'package:path_provider/path_provider.dart';
@@ -54,7 +55,9 @@ class MyLocalDatabase {
     var id = await db.rawQuery(
         "SELECT id FROM loginData WHERE email = '${profile.loginData.email}'");
     map["loginID"] = id[0]["id"];
-    db.insert("profiles", map);
+    int r = await db.insert("profiles", map);
+    print("inserted: $r");
+    Constants.myId = r;
   }
 
   // QUERY
@@ -120,11 +123,19 @@ class MyLocalDatabase {
     Database db = await this.database;
     int id;
     var q = await db
-        .rawQuery("select id from profiles where name = ${profile.name}");
+        .rawQuery("select id from profiles where name = '${profile.name}'");
     id = q[0]["id"];
     int r = await db.update("profiles", UserProfileData.toMap(profile),
         where: "id = '$id'");
-    // print("updated $r");
+    print("updated $r");
+  }
+
+  updateMyProfile(UserProfileData profile) async {
+    Database db = await this.database;
+    int id = Constants.myId;
+    int r = await db.update("profiles", UserProfileData.toMap(profile),
+        where: "id = '$id'");
+    print("updated $r");
   }
 
   // STREAM

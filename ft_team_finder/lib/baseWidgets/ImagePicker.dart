@@ -7,10 +7,10 @@ class ImagePicker extends StatefulWidget {
 }
 
 class _ImagePickerState extends State<ImagePicker> {
-  final String picPath = "assets/peepoCute.png";
   Image img;
 
-  Widget getImage() {
+  static Widget getImage() {
+    final String picPath = "assets/peepoCute.png";
 // RETURNING PLACEHOLDER PROFILE IMAGE
     return Image.asset(
       picPath,
