@@ -32,37 +32,29 @@ class BrowsingProfilesScreen extends BaseLayout {
     });
   }
 
-  Scaffold layout(List<UserProfileData> users) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: LayoutBuilder(builder: (__, constraints) {
-        Constants().init(__);
-        return Container(
-          width: constraints.maxWidth,
-          height:
-              Constants.height * 0.62, //placeholder: yeah magic number i know
-          child: ListView.builder(
-            padding: EdgeInsets.zero,
-            itemCount: users.length,
-            itemBuilder: (BuildContext _, int index) {
-              String grad = (users[index].gradID == 1) ? "BSI" : "TADS";
-              return ExpansionTile(
-                title: Text(users[index].name),
-                subtitle: Text("$grad, ${users[index].yearOfEntry}"),
-                trailing: makeInviteButton(__, users[index]),
-                children: [
-                  Container(
-                      width: Constants.width * 0.5,
-                      height: Constants.height * 0.3,
-                      child: makeSkillsChart(
-                        users[index],
-                      )),
-                ],
-              );
-            },
-          ),
-        );
-      }),
+  Widget layout(List<UserProfileData> users) {
+    return Container(
+      height: Constants.height * 0.6,
+      child: ListView.builder(
+        padding: EdgeInsets.zero,
+        itemCount: users.length,
+        itemBuilder: (BuildContext _, int index) {
+          String grad = (users[index].gradID == 1) ? "BSI" : "TADS";
+          return ExpansionTile(
+            title: Text(users[index].name),
+            subtitle: Text("$grad, ${users[index].yearOfEntry}"),
+            trailing: makeInviteButton(_, users[index]),
+            children: [
+              Container(
+                  width: Constants.width * 0.5,
+                  height: Constants.height * 0.3,
+                  child: makeSkillsChart(
+                    users[index],
+                  )),
+            ],
+          );
+        },
+      ),
     );
   }
 
@@ -71,7 +63,7 @@ class BrowsingProfilesScreen extends BaseLayout {
         onPressed: () {
           this.user.group.add(user);
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text("${this.user.name} added to ${user.name}'s group"),
+            content: Text("${user.name} added to ${this.user.name}'s group"),
             duration: Constants.defaultSnackBarDuration,
           ));
         },

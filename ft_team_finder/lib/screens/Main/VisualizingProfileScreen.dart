@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_radar_chart/flutter_radar_chart.dart';
 import 'package:ft_team_finder/baseWidgets/baseLayout.dart';
 import 'package:ft_team_finder/baseWidgets/customDialog.dart';
 import 'package:ft_team_finder/constants.dart';
+import 'package:ft_team_finder/logic/ProfileBloc/ProfileBloc.dart';
+import 'package:ft_team_finder/logic/ProfileBloc/ProfileState.dart';
 import 'package:ft_team_finder/models/UserProfileData.dart';
 import 'package:ft_team_finder/models/UserSkillsData.dart';
 
 // ignore: must_be_immutable
 class VisualizingProfileScreen extends BaseLayout {
   UserProfileData user;
-  UserProfileData loggedUser;
-  UserSkillsData skills;
+  UserProfileData myProfile;
 
   VisualizingProfileScreen(
       UserProfileData userBeingVisualized, BuildContext context) {
     this.user = userBeingVisualized;
-    this.skills = user.skills;
     this.child = wid(context);
   }
 
@@ -25,34 +26,49 @@ class VisualizingProfileScreen extends BaseLayout {
   }
 
   Widget wid(BuildContext context) {
-    Constants().init(context);
-    String grad = (this.user.gradID == 1) ? "BSI" : "TADS";
-    return Column(
-      children: [
-        ClipOval(child: Image.memory(this.user.img)),
-        Divider(),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            Container(
-                width: Constants.width * 0.4,
-                child: Text(
-                  "${this.user.name}'s Profile",
-                  style: Constants.defaultTextStyle,
-                )),
-            Text(
-              "$grad - ${this.user.yearOfEntry}",
-              style: Constants.defaultTextStyle,
-            ),
-          ],
-        ),
-        Divider(),
-        makeSkillsChart(this.skills),
-        Divider(),
-        Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
-          makeContactButton(context, this.user),
-        ]),
-      ],
+    // Constants().init(context);
+    return BlocBuilder<ProfileBloc, ProfileState>(
+      builder: (_, state) {
+        state is CurrentProfile
+            ? this.myProfile = state.profile
+            : print("this shouldnt happen");
+        String grad = (this.user.gradID == 1) ? "BSI" : "TADS";
+        return Container(
+          height: Constants.height * 0.6,
+          child: ListView(
+            children: [
+              ClipOval(
+                  child: Image.memory(
+                this.user.img,
+                height: Constants.height * 0.2,
+                width: Constants.width * 0.2,
+              )),
+              Divider(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Container(
+                      width: Constants.width * 0.4,
+                      child: Text(
+                        "${this.user.name}'s Profile",
+                        style: Constants.defaultTextStyle,
+                      )),
+                  Text(
+                    "$grad - ${this.user.yearOfEntry}",
+                    style: Constants.defaultTextStyle,
+                  ),
+                ],
+              ),
+              Divider(),
+              makeSkillsChart(this.user.skills),
+              Divider(),
+              Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
+                makeContactButton(context, this.user),
+              ]),
+            ],
+          ),
+        );
+      },
     );
   }
 

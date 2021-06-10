@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ft_team_finder/database/MyLocalDatabase.dart';
 import 'package:ft_team_finder/logic/LoginDataBloc/ListenerBloc.dart';
 import 'package:ft_team_finder/logic/LoginDataBloc/ListenerState.dart';
+import 'package:ft_team_finder/logic/ProfileBloc/ProfileBloc.dart';
+import 'package:ft_team_finder/logic/ProfileBloc/ProfileEvent.dart';
 import 'package:ft_team_finder/models/LoginData.dart';
 import 'package:ft_team_finder/baseWidgets/baseLayout.dart';
+import 'package:ft_team_finder/models/UserProfileData.dart';
 import 'package:ft_team_finder/screens/Login/SigninScreen.dart';
 
 import '../../constants.dart';
@@ -54,7 +58,7 @@ class LoginScreen extends BaseLayout {
                       ElevatedButton(
                         child: Text("Login"),
                         onPressed: () {
-                          forward(context, state.loginList);
+                          forward(context);
                         },
                       ),
                     ],
@@ -68,21 +72,37 @@ class LoginScreen extends BaseLayout {
     });
   }
 
-  forward(BuildContext context, List<LoginData> logins) {
+  forward(BuildContext context) async {
     formKey.currentState.save();
-    for (LoginData loginData in logins) {
-      if (loginData.email == this.login.email &&
-          loginData.password == this.login.password) {
-        Navigator.push(context, MaterialPageRoute(builder: (_) {
-          return Hub();
-        }));
-      } else {
-        formKey.currentState.reset();
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text("Incorrect Credentials!"),
-          duration: Constants.defaultSnackBarDuration,
-        ));
+    print("tryna login:${this.login.email},${this.login.password}");
+    var r = await MyLocalDatabase.helper.getLogins();
+    int i = -1;
+    for (LoginData l in r) {
+      if (l.email == this.login.email) if (l.password == this.login.password)
+        i = 0;
+    }
+    if (i == -1) {
+      formKey.currentState.reset();
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text("Incorrect Credentials!"),
+        duration: Constants.defaultSnackBarDuration,
+      ));
+    } else {
+      print("yes");
+      // Constants.myId =
+      //     await MyLocalDatabase.helper.getIdFromEmail(this.login.email);
+      // UserProfileData me =
+      //     await MyLocalDatabase.helper.getProfileByEmail(this.login.email);
+      List<UserProfileData> allUsers =
+          await MyLocalDatabase.helper.getAllProfiles();
+      UserProfileData me;
+      for (UserProfileData someUser in allUsers) {
+        if (someUser.loginData.email == this.login.email) me = someUser;
       }
+      BlocProvider.of<ProfileBloc>(context).add(UpdateEvent(profile: me));
+      Navigator.push(context, MaterialPageRoute(builder: (_) {
+        return Hub();
+      }));
     }
   }
 

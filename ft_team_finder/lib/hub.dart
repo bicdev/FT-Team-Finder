@@ -5,6 +5,7 @@ import 'package:ft_team_finder/logic/ProfileBloc/ProfileState.dart';
 import 'package:ft_team_finder/screens/Main/BrowsingProfilesScreen.dart';
 import 'package:ft_team_finder/screens/Main/GroupsScreen.dart';
 import 'package:ft_team_finder/screens/Main/VisualizingProfileScreen.dart';
+import 'package:ft_team_finder/models/UserProfileData.dart';
 
 import 'baseWidgets/baseLayout.dart';
 
@@ -33,6 +34,9 @@ class _HubState extends State<Hub> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ProfileBloc, ProfileState>(builder: (_, state) {
+      state is CurrentProfile
+          ? UserProfileData.toMap(state.profile).toString()
+          : print("this shouldnt happen");
       if (state is CurrentProfile) {
         BrowsingProfilesScreen browsingProfilesScreen =
             BrowsingProfilesScreen();
@@ -58,6 +62,8 @@ class _HubState extends State<Hub> {
             });
           },
           selectedItemColor: Colors.pink,
+          unselectedItemColor: Colors.white,
+          backgroundColor: Colors.blueGrey,
         ),
       );
     });

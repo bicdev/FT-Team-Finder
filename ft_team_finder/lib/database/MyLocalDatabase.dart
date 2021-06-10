@@ -24,7 +24,7 @@ class MyLocalDatabase {
 
   Future<Database> initializeDatabase() async {
     Directory directory = await getApplicationDocumentsDirectory();
-    String path = directory.path + "team_finder4.db";
+    String path = directory.path + "team_finder5.db";
 
     Database myDatabase =
         await openDatabase(path, version: 1, onCreate: _createDb);
@@ -82,6 +82,8 @@ class MyLocalDatabase {
     var query = await db.query("profiles");
     for (int i = 0; i < query.length; i++) {
       UserProfileData user = UserProfileData.fromMap(query[i]);
+      print(
+          "user: ${user.name} -- skills: ${user.skills.be}, ${user.skills.fe}, ${user.skills.db}, ${user.skills.qa}, ${user.skills.dt}, ${user.skills.st}");
       var id = await db.rawQuery(
           "SELECT email, password FROM loginData WHERE id = '${query[i]["id"]}'");
       user.loginData =
@@ -90,6 +92,22 @@ class MyLocalDatabase {
     }
 
     return users;
+  }
+
+  Future<int> getIdFromEmail(String email) async {
+    Database db = await this.database;
+    var r = await db.query("loginData",
+        columns: ["id"], where: "email = ?", whereArgs: [email]);
+    return r[0]["id"];
+  }
+
+  Future<UserProfileData> getProfileByEmail(String email) async {
+    Database db = await this.database;
+    var loginId =
+        await db.rawQuery("SELECT id FROM loginData where email = '$email'");
+    var name =
+        await db.rawQuery("SELECT name FROM profiles where id = '$loginId'");
+    return getProfileByName(name[0]["name"]);
   }
 
   //TESTED WORKS

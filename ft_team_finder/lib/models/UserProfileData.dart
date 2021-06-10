@@ -25,19 +25,19 @@ class UserProfileData {
     this.group.add(this);
   }
 
-  UserProfileData.fromMap(dynamic map) {
+  UserProfileData.fromMap(Map<String, Object> map) {
     this.loginData = map["loginData"];
-    this.name = map["name"];
-    this.alias = map["alias"];
-    this.gradID = map["gradID"];
-    this.yearOfEntry = map["yearOfEntry"];
-    this.img = map["img"];
-    this.skills.be = map["BE"];
-    this.skills.fe = map["FE"];
-    this.skills.qa = map["QA"];
-    this.skills.db = map["DB"];
-    this.skills.dt = map["DT"];
-    this.skills.st = map["ST"];
+    this.name = map["name"] ?? "";
+    this.alias = map["alias"] ?? "";
+    this.gradID = map["gradID"] ?? 0;
+    this.yearOfEntry = map["yearOfEntry"] ?? DateTime.now().year;
+    this.img = map["img"] ?? 0;
+    this.skills.be = map["BE"] ?? 1;
+    this.skills.fe = map["FE"] ?? 1;
+    this.skills.qa = map["QA"] ?? 1;
+    this.skills.db = map["DB"] ?? 1;
+    this.skills.dt = map["DT"] ?? 1;
+    this.skills.st = map["ST"] ?? 1;
   }
 
   static toMap(UserProfileData profile) {

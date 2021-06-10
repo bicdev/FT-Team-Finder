@@ -7,6 +7,7 @@ import 'package:ft_team_finder/logic/ProfileBloc/ProfileBloc.dart';
 import 'package:ft_team_finder/logic/ProfileBloc/ProfileEvent.dart';
 import 'package:ft_team_finder/logic/ProfileBloc/ProfileState.dart';
 import 'package:ft_team_finder/models/UserProfileData.dart';
+import 'package:ft_team_finder/models/UserSkillsData.dart';
 
 import '../../hub.dart';
 
@@ -50,6 +51,14 @@ class ProfileSkillSelectionScreenState
             ElevatedButton(
                 child: Icon(Icons.forward),
                 onPressed: () {
+                  UserSkillsData newSkills = UserSkillsData.fromList(
+                      be: this.vBE,
+                      db: this.vDB,
+                      dt: this.vDT,
+                      fe: this.vFE,
+                      qa: this.vQA,
+                      st: this.vST);
+                  this.user.skills = newSkills;
                   BlocProvider.of<ProfileBloc>(context)
                       .add(UpdateEvent(profile: this.user));
                   Navigator.push(context, MaterialPageRoute(builder: (_) {
